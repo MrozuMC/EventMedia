@@ -7,11 +7,12 @@ namespace EventoMedia.Models
 {
     public class HomeViewModel
     {
-       
+        public int EventID { get; set; }
         public string HeadImageURL { get; set; }
         public string OrganiserID { get; set; } //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         public string EventName { get; set; }
+        public string EventDescription { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 

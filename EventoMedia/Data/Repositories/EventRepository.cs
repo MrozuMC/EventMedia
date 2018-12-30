@@ -32,5 +32,14 @@ namespace EventoMedia.Data.Repositories
         {
             return _context.Events.Include(a => a.EventAddress);
         }
+        public Event GetByIdWithAddress(int? id) {
+
+            return _context.Events
+                .Include(x => x.EventAddress)
+                .Where(e => e.EventID == id)
+                .FirstOrDefault();
+                                  
+
+        }
     }
 }

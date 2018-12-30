@@ -1,0 +1,78 @@
+﻿@using EventoMedia.Data.Models
+@{
+    ViewData["Title"] = "Details";
+}
+@model HomeViewModel
+
+<h2>Details</h2>
+
+<div>
+    <h4>Event</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HeadImageURL)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HeadImageURL)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OrganiserID)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OrganiserID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EventName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EventName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EventDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EventDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumberofTickets)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumberofTickets)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Active)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Active)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+    </dl>
+</div>
+<div>
+    
+    <a asp-action="Index">Back to List</a>
+</div>

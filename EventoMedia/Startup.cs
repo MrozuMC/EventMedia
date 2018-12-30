@@ -14,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using EventoMedia.Data.Interfaces;
 using EventoMedia.Data.Repositories;
+using EventoMedia.Data.Models;
+using Microsoft.Extensions.Logging;
 
 namespace EventoMedia
 {
@@ -40,8 +42,16 @@ namespace EventoMedia
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            //  services.AddIdentity<IdentityUser, IdentityRole>()
+            //services.AddDefaultIdentity<IdentityUser>()
+            //AddEntityFrameworkStores<ApplicationDbContext>();
+            //.AddDefaultUI()
+            //.AddDefaultTokenProviders();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddRoleManager<RoleManager<IdentityRole>>()
+            .AddDefaultUI()
+            .AddDefaultTokenProviders()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddTransient<IApplicationUserRepository, ApplicationUserRepository>();
             services.AddTransient<IEventAddressRepository, EventAddressRepository>();
@@ -57,8 +67,13 @@ namespace EventoMedia
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
+            
+
+          
+            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -69,19 +84,60 @@ namespace EventoMedia
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
             app.UseAuthentication();
-
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+           CreateRoles(serviceProvider).Wait();
         }
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            //initializing custom roles 
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            string[] roleNames = { "Admin", "Manager", "Member" };
+            IdentityResult roleResult;
+
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    //create the roles and seed them to the database: Question 1
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+            //Here you could create a super user who will maintain the web app
+            var poweruser = new ApplicationUser
+            {
+
+                UserName = Configuration.GetSection("UserSettings")["UserEmail"],
+                Email = Configuration.GetSection("UserSettings")["UserEmail"],
+            };
+            //Ensure you have these values in your appsettings.json file
+            string userPWD = Configuration.GetSection("UserSettings")["UserPassword"];
+            var _user = await UserManager.FindByEmailAsync(Configuration.GetSection("UserSettings")["UserEmail"]);
+
+            if (_user == null)
+            {
+                var createPowerUser = await UserManager.CreateAsync(poweruser, userPWD);
+                if (createPowerUser.Succeeded)
+                {
+                    //here we tie the new user to the role
+                    await UserManager.AddToRoleAsync(poweruser, "Admin");
+
+                }
+            }
+        }
+
     }
 }

@@ -36,7 +36,7 @@ namespace EventoMedia.Controllers
             {
                 EventVM.Add(new HomeViewModel
                 {
-                    
+                    EventID = Event.EventID,
                     HeadImageURL = Event.HeadImageURL,
                     OrganiserID = Event.OrganiserID,
                     EventName = Event.EventName,
@@ -52,20 +52,40 @@ namespace EventoMedia.Controllers
             }
             return View(EventVM);
         }
+        [Route("Details")]
+        public IActionResult Details(int? id) {
+            
+            var EventDetails = _eventRepository.GetByIdWithAddress(id);
+            if (EventDetails == null)
+            {
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
+                return View("Empty");
 
-            return View();
+
+            }
+            else
+            {
+                var EventDetailVM = new HomeViewModel
+                {
+                    HeadImageURL = EventDetails.HeadImageURL,
+                    OrganiserID = EventDetails.OrganiserID,
+                    EventName = EventDetails.EventName,
+                    EventDescription = EventDetails.EventDescription,
+                    StartDate = EventDetails.StartDate,
+                    EndDate = EventDetails.EndDate,
+                    NumberofTickets = EventDetails.NumberofTickets,
+                    Active = EventDetails.Active,
+                    Address = EventDetails.EventAddress.Address,
+                    City = EventDetails.EventAddress.City
+                };
+                return View(EventDetailVM);
+            }
         }
+        
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
 
-            return View();
-        }
+
+            
 
         public IActionResult Privacy()
         {
