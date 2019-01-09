@@ -25,21 +25,44 @@ namespace EventoMedia.Data.Repositories
         {
             return _context.Events
                 .Include(t => t.TagEvents)
+                .ThenInclude(t => t.Tag)
                 .Where(predicate);
+        }
+
+        public IEnumerable<Event> GetAllForHomeViewModel()
+        {
+            return _context.Events
+                .Include(x => x.EventAddress)
+                .Include(x => x.OrganiserRating)
+                    .ThenInclude(x => x.User);
         }
 
         public IEnumerable<Event> GetAllWithAdress()
         {
-            return _context.Events.Include(a => a.EventAddress);
+            return _context.Events.Include(a => a.EventAddress).Include(e => e.OrganiserRating).ThenInclude(x => x.User);
         }
+
         public Event GetByIdWithAddress(int? id) {
 
             return _context.Events
                 .Include(x => x.EventAddress)
+                .Include(x => x.OrganiserRating)
+                    .ThenInclude(x => x.User)
                 .Where(e => e.EventID == id)
                 .FirstOrDefault();
                                   
 
+        }
+
+        public Event GetByIdWithEverything(int? id)
+        {
+            return _context.Events
+                .Include(x => x.EventAddress)
+                .Include(o => o.OrganiserRating)
+                .Include(t => t.TagEvents)
+                    .ThenInclude(e => e.Tag)
+                .AsNoTracking()                
+                .SingleOrDefault(m => m.EventID == id);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using EventoMedia.Data.Interfaces;
 using EventoMedia.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,7 @@ namespace EventoMedia.Data.Repositories
         public OrganiserRatingRepository(ApplicationDbContext context) : base(context)
         {
         }
+
+        
     }
 }

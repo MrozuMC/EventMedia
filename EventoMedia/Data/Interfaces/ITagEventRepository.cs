@@ -8,5 +8,9 @@ namespace EventoMedia.Data.Interfaces
 {
     public interface ITagEventRepository : IRepository<TagEvent>
     {
+        List<TagEvent> GetTagsToCRUD();
+        List<TagEvent> GetTags(int? id);
+
+        
     }
 }

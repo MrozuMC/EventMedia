@@ -8,5 +8,7 @@ namespace EventoMedia.Data.Interfaces
 {
     public interface IUserEventRepository : IRepository<UserEvent>
     {
+        List<UserEvent> GetAllUsers(int? id);
+        List<UserEvent> GetAllUsersToCRUD();
     }
 }

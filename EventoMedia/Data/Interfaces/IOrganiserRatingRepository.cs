@@ -8,5 +8,6 @@ namespace EventoMedia.Data.Interfaces
 {
     public interface IOrganiserRatingRepository: IRepository<OrganiserRating>
     {
+        
     }
 }

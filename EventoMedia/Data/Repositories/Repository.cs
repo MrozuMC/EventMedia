@@ -53,5 +53,10 @@ namespace EventoMedia.Data.Repositories
             _context.Entry(entity).State = EntityState.Modified;
             Save();
         }
+
+       public void CreateWithoutSave(T entity)
+        {
+            _context.Add(entity);
+        }
     }
 }

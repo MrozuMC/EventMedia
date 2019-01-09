@@ -9,8 +9,7 @@ namespace EventoMedia.Data.Models
     {
         public int EventID { get; set; }
         public string HeadImageURL { get; set; }
-        public string OrganiserID { get; set; } //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
+        
         public string EventName { get; set; }
 
         public string EventDescription { get; set; }
@@ -19,6 +18,11 @@ namespace EventoMedia.Data.Models
 
         public int NumberofTickets { get; set; }
         public bool Active { get; set; }
+
+         //var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        public virtual OrganiserRating OrganiserRating { get; set; }
+
+        
 
         public virtual EventAddress EventAddress { get; set; }
 

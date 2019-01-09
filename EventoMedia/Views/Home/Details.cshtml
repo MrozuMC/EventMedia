@@ -70,8 +70,62 @@
         <dd>
             @Html.DisplayFor(model => model.City)
         </dd>
+
     </dl>
-</div>
+    <div>
+        @for (int i = 0; i < Model.Tags.Capacity; i++)
+        {
+            <dl>
+                <dt>
+                    @Html.DisplayNameFor(x => Model.Tags[i].TagName)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(x => Model.Tags[i].TagName)
+                </dd>
+            </dl>
+        }
+        @for (int i = 0; i < Model.Users.Capacity; i++)
+        {
+
+            @Html.DisplayFor(x => Model.Users[i].Imie); @Html.DisplayFor(x => Model.Users[i].Nazwisko); <b>Nick:</b> @Html.DisplayFor(x => Model.Users[i].Nick);
+            <br />
+        }
+    </div>
+    <div>
+        <dl>
+            <dt>
+                @Html.DisplayNameFor(model => model.Imie)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Imie)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Nazwisko)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Nazwisko)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.nick)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.nick)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.NumberOfVotes)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.NumberOfVotes)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Rating)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Rating)
+            </dd>
+        </dl>
+    </div>
+    </div>
 <div>
     
     <a asp-action="Index">Back to List</a>

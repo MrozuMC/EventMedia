@@ -1,5 +1,6 @@
 ﻿using EventoMedia.Data.Interfaces;
 using EventoMedia.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,17 @@ namespace EventoMedia.Data.Repositories
         public TagEventRepository(ApplicationDbContext context) : base(context)
         {
         }
+
+        public List<TagEvent> GetTags(int? id)
+        {
+            return _context.TagEvents.Include(x => x.Tag).Where(te => te.EventID == id).ToList();
+        }
+
+        public List<TagEvent> GetTagsToCRUD()
+        {
+            return _context.TagEvents.Include(x => x.Tag).ToList();
+        }
+
+       
     }
 }

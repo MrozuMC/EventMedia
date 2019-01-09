@@ -1,0 +1,83 @@
+﻿@model EventoMedia.Models.HomeViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create Event</h2>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="HeadImageURL" class="control-label"></label>
+                <input asp-for="HeadImageURL" class="form-control" />
+                <span asp-validation-for="HeadImageURL" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventName" class="control-label"></label>
+                <input asp-for="EventName" class="form-control" />
+                <span asp-validation-for="EventName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventDescription" class="control-label"></label>
+                <input asp-for="EventDescription" class="form-control" />
+                <span asp-validation-for="EventDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumberofTickets" class="control-label"></label>
+                <input asp-for="NumberofTickets" class="form-control" />
+                <span asp-validation-for="NumberofTickets" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <table>
+                    @for (int i = 0; i < Model.Tags.Capacity; i++)
+                    {
+                        <tr>
+                            <td>
+                                @Html.HiddenFor(x => Model.Tags[i].TagID)
+                                @Html.DisplayFor(t => Model.Tags[i].TagName)
+
+                            </td>
+                            <td>
+                                @Html.CheckBoxFor(t => Model.Tags[i].IsChosen);
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

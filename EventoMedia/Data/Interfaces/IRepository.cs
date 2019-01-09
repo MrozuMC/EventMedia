@@ -14,6 +14,9 @@ namespace EventoMedia.Data.Interfaces
 
         void Create(T entity);
 
+        void CreateWithoutSave(T entity);
+
+        
         void Update(T entity);
 
         void Delete(T entity);

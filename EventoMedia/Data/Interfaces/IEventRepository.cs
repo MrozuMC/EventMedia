@@ -9,9 +9,11 @@ namespace EventoMedia.Data.Interfaces
     public interface IEventRepository : IRepository<Event>
     {
         IEnumerable<Event> GetAllWithAdress();
+        IEnumerable<Event> GetAllForHomeViewModel();
         Event GetByIdWithAddress(int? id);
-
         IEnumerable<Event> FindWithTag(Func<Event, bool> predicate);
         IEnumerable<Event> FindWithMultiTags(Func<Event, bool> predicate);
+        Event GetByIdWithEverything(int? id);
+        
     }
 }

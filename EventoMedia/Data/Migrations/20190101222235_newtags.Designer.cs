@@ -4,14 +4,16 @@ using EventoMedia.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EventoMedia.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190101222235_newtags")]
+    partial class newtags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,15 +41,13 @@ namespace EventoMedia.Data.Migrations
 
                     b.Property<int>("NumberofTickets");
 
-                    b.Property<int?>("OrganiserRatingID");
+                    b.Property<string>("OrganiserID");
 
                     b.Property<DateTime>("StartDate");
 
                     b.HasKey("EventID");
 
                     b.HasIndex("EventAddressID");
-
-                    b.HasIndex("OrganiserRatingID");
 
                     b.ToTable("Events");
                 });
@@ -353,10 +353,6 @@ namespace EventoMedia.Data.Migrations
                     b.HasOne("EventoMedia.Data.Models.EventAddress", "EventAddress")
                         .WithMany()
                         .HasForeignKey("EventAddressID");
-
-                    b.HasOne("EventoMedia.Data.Models.OrganiserRating", "OrganiserRating")
-                        .WithMany()
-                        .HasForeignKey("OrganiserRatingID");
                 });
 
             modelBuilder.Entity("EventoMedia.Data.Models.EventPost", b =>

@@ -4,6 +4,7 @@ using System.Text;
 using EventoMedia.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using EventoMedia.Models;
 
 namespace EventoMedia.Data
 {
@@ -59,5 +60,7 @@ namespace EventoMedia.Data
 
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<EventoMedia.Models.HomeViewModel> HomeViewModel { get; set; }
     }
 }

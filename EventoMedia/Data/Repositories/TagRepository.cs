@@ -1,5 +1,6 @@
 ﻿using EventoMedia.Data.Interfaces;
 using EventoMedia.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace EventoMedia.Data.Repositories
         public TagRepository(ApplicationDbContext context) : base(context)
         {
         }
+
+      
     }
 }
