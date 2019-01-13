@@ -10,6 +10,7 @@
     <Compile Remove="Data\Migrations\20190102211613_OrganiserChanges.Designer.cs" />
     <Compile Remove="Data\Migrations\20190102212001_Organiserratingtoevent.cs" />
     <Compile Remove="Data\Migrations\20190102212001_Organiserratingtoevent.Designer.cs" />
+    <Compile Remove="Models\EditViewModel.cs" />
   </ItemGroup>
 
   <ItemGroup>

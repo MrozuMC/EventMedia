@@ -14,6 +14,21 @@ namespace EventoMedia.Data.Repositories
         {
 
         }
+
+        public bool CheckForActiveEvent(int? id)
+        {
+           var check = _context.Events.Where(e => e.EventID == id).FirstOrDefault();
+
+            if (check.EndDate <= DateTime.Now)
+            {
+                return false;
+            }
+            else
+            {
+                return true; 
+            }
+        }
+
         public IEnumerable<Event> FindWithMultiTags(Func<Event, bool> predicate)
         {
             return _context.Events
@@ -39,7 +54,7 @@ namespace EventoMedia.Data.Repositories
 
         public IEnumerable<Event> GetAllWithAdress()
         {
-            return _context.Events.Include(a => a.EventAddress).Include(e => e.OrganiserRating).ThenInclude(x => x.User);
+            return _context.Events.Include(a => a.EventAddress).Include(e => e.OrganiserRating).ThenInclude(x => x.User).OrderBy(e => e.StartDate);
         }
 
         public Event GetByIdWithAddress(int? id) {

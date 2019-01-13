@@ -66,7 +66,7 @@ namespace EventoMedia.Controllers
                     StartDate = Event.StartDate,
                     EndDate = Event.EndDate,
                     NumberofTickets = Event.NumberofTickets,
-                    Active = Event.Active,
+                    Active = _eventRepository.CheckForActiveEvent(Event.EventID),
                     Address = Event.EventAddress.Address,
                     City = Event.EventAddress.City,
 
@@ -75,73 +75,21 @@ namespace EventoMedia.Controllers
             }
             return View(EventVM);
         }
-        [Route("Details")]
-        public IActionResult Details(int? id)
-        {
-
-            var EventDetails = _eventRepository.GetByIdWithAddress(id);
-            var MultipleTags = _tagEventRepository.GetTags(id);
-            var MultipleUsers = _userEventRepository.GetAllUsers(id);
-
-            if (EventDetails == null)
-            {
-
-                return View("Empty");
-
-
-            }
-            else
-            {
-                var EventDetailVM = new HomeViewModel
-                {
-                    HeadImageURL = EventDetails.HeadImageURL,
-                    EventName = EventDetails.EventName,
-                    EventDescription = EventDetails.EventDescription,
-                    StartDate = EventDetails.StartDate,
-                    EndDate = EventDetails.EndDate,
-                    NumberofTickets = EventDetails.NumberofTickets,
-                    Active = EventDetails.Active,
-                    Address = EventDetails.EventAddress.Address,
-                    City = EventDetails.EventAddress.City,
-                    Tags = MultipleTags.Select(x => new Tagi()
-                    {
-                        TagID = x.Tag.TagID,
-                        TagName = x.Tag.TagName,
-                        TagDescription = x.Tag.TagDescription
-                    }).ToList(),
-                    Users = MultipleUsers.Select(x => new UsersinEvents()
-                    {
-                        UserID = x.User.Id,
-                        Imie = x.User.Imie,
-                        Nazwisko = x.User.Nazwisko,
-                        Nick = x.User.Nick
-                    }).ToList(),
-                    OrganiserID = EventDetails.OrganiserRating.User.Id,
-                    Imie = EventDetails.OrganiserRating.User.Imie,
-                    Nazwisko = EventDetails.OrganiserRating.User.Nazwisko,
-                    nick = EventDetails.OrganiserRating.User.Nick,
-                    NumberOfVotes = EventDetails.OrganiserRating.NumberOfVotes,
-                    Rating = EventDetails.OrganiserRating.AverageRating
-                };
-
-
-                return View(EventDetailVM);
-            }
-        }
+       
         [Authorize]
         [HttpGet]
         public IActionResult Create()
         {
             var TagsItem = _tagEventRepository.GetTagsToCRUD();
-
+            var test = _context.Tags.Include(x => x.TagEvents).ToList();
             HomeViewModel CreateHomeViewModel = new HomeViewModel
             {
-                Tags = TagsItem.Select(x => new Tagi()
+                Tags = test.Select(x => new Tagi()
                 {
 
-                    TagID = x.Tag.TagID,
-                    TagName = x.Tag.TagName,
-                    TagDescription = x.Tag.TagDescription,
+                    TagID = x.TagID,
+                    TagName = x.TagName,
+                    TagDescription = x.TagDescription,
                     IsChosen = false
                 }).ToList()
             };
@@ -155,7 +103,7 @@ namespace EventoMedia.Controllers
         {
 
             string GetUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var FindOrganiserwithID = _organiserRatingRepository.GetAll().Where(x => x.UserID == GetUser);
+            var FindOrganiserwithID = _organiserRatingRepository.FindCurrentUserInTable(GetUser);
             List<TagEvent> tagsevent = new List<TagEvent>();
             Ev.EventName = HVM.EventName;
             Ev.HeadImageURL = HVM.HeadImageURL;
@@ -175,16 +123,14 @@ namespace EventoMedia.Controllers
             if (FindOrganiserwithID != null)
             {
 
-                Ev.OrganiserRating = FindOrganiserwithID.FirstOrDefault();
+                Ev.OrganiserRating = FindOrganiserwithID;
                 
             }
-            else
+            else 
             {
                 OrgRat.UserID = GetUser;
                 _organiserRatingRepository.Create(OrgRat);
-                Ev.OrganiserRating = FindOrganiserwithID.FirstOrDefault();
-
-
+                Ev.OrganiserRating = OrgRat;
             }
             Ev.EventAddress = EvAdd;
             EvAdd.Address = HVM.Address;
@@ -247,17 +193,6 @@ namespace EventoMedia.Controllers
         public IActionResult Edit(HomeViewModel HVM, Event Eve, EventAddress EvAdd, TagEvent TagEv)
         {
 
-
-           /* var EveCurrent = _context.Events.FirstOrDefault(e => e.EventID == Eve.EventID);
-            if (EveCurrent == null)
-            {
-                return View("index");
-            }
-            var EvAddCurrent = _context.EventAddresses.FirstOrDefault(a => a.EventAddressID == EvAdd.EventAddressID);
-            if (EvAddCurrent == null)
-            {
-                return View("index");
-            } */
             
             List<TagEvent> newtags = new List<TagEvent>();
             Eve.EventID = HVM.EventID;
@@ -279,8 +214,7 @@ namespace EventoMedia.Controllers
             {
                 Eve.Active = true;
             }
-            //_eventAddressRepository.Update(EvAdd);
-           //_eventRepository.Update(Eve);
+            
              _context.Events.Update(Eve);
              _context.EventAddresses.Update(EvAdd);
              _context.SaveChanges();
@@ -312,9 +246,18 @@ namespace EventoMedia.Controllers
 
             return RedirectToAction("index");
         }
-
+        [Authorize]
+        [HttpGet]
         public IActionResult Delete(int id)
         {
+
+            string GetUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var EditGetEvent = _eventRepository.GetByIdWithEverything(id);
+            if (EditGetEvent.OrganiserRating.UserID != GetUser)
+            {
+                return View("Empty");
+            }
+
             var EventDetails = _eventRepository.GetByIdWithAddress(id);
             
             var DeleteDetail = new HomeViewModel
@@ -326,16 +269,33 @@ namespace EventoMedia.Controllers
             };
             return View(DeleteDetail);
         }
-     /*   public IActionResult Delete(Event Eve, EventAddress Evadd, UserEvent UsEv, TagEvent TagEv)
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteAction(int id)
         {
-            _userEventRepository.Delete(UsEv);
-            _tagEventRepository.Delete(TagEv);
-            _eventAddressRepository.Delete(Evadd);
-            _eventRepository.Delete(Eve);
+            var Event = _eventRepository.GetById(id);
+            // var Users = _userEventRepository.GetAllUsers(id);
+            // var tags = _tagEventRepository.GetTags(id);
+            var EventAddress = _eventRepository.GetByIdWithAddress(id).EventAddress;
+            if (Event == null)  
+            {
+                return RedirectToAction("index");
+            }
+
+            try
+            {
+                _context.Events.Remove(Event);
+                _context.EventAddresses.Remove(EventAddress);
+                _context.SaveChanges();
+            }
+            catch(DbUpdateException)
+            {
+
+                return RedirectToAction("Delete", new { id });
+            }
 
           return RedirectToAction("index");
 
-        }*/
+        }
 
         public IActionResult Privacy()
         {

@@ -14,6 +14,12 @@ namespace EventoMedia.Data.Repositories
         {
         }
 
+        public UserEvent FindUserInEvent(string id, int eventid)
+        {
+            return _context.UserEvents.Where(ue => ue.UserID == id).Where( ue => ue.EventID == eventid).FirstOrDefault();
+            
+        }
+
         public List<UserEvent> GetAllUsers(int? id)
         {
             return _context.UserEvents.Include(x => x.User).Where(ue => ue.EventID == id).ToList();
@@ -23,5 +29,6 @@ namespace EventoMedia.Data.Repositories
         {
             return _context.UserEvents.Include(x => x.User).ToList();
         }
+
     }
 }

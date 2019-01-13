@@ -10,5 +10,6 @@ namespace EventoMedia.Data.Interfaces
     {
         List<UserEvent> GetAllUsers(int? id);
         List<UserEvent> GetAllUsersToCRUD();
+        UserEvent FindUserInEvent(string id, int eventid);
     }
 }

@@ -10,6 +10,7 @@
     <h4>Event</h4>
     <hr />
     <dl class="dl-horizontal">
+        @Html.HiddenFor(model => model.EventID)
         <dt>
             @Html.DisplayNameFor(model => model.HeadImageURL)
         </dt>
@@ -125,8 +126,15 @@
             </dd>
         </dl>
     </div>
-    </div>
-<div>
-    
-    <a asp-action="Index">Back to List</a>
 </div>
+
+
+<form asp-action="Details" asp-route-id="@Model.EventID" method="post">
+    <input type="submit" value="Join" />
+</form>
+<a asp-action="Edit" asp-controller="Home" asp-route-id="@Model.EventID">Edit Event</a>
+<a asp-action="Delete" asp-controller="Home" asp-route-id="@Model.EventID">Delete Event</a>
+<a asp-action="Index" asp-controller="Home">Back to List</a>
+
+
+

@@ -75,20 +75,40 @@
         <tbody>
             @foreach (var EventVM in Model)
             {
-            <tr>
-                <td>@EventVM.HeadImageURL</td>
-                <td>@EventVM.OrganiserID</td>
-                <td>@EventVM.EventName</td>
-                <td>@EventVM.StartDate</td>
-                <td>@EventVM.EndDate</td>
-                <td>@EventVM.NumberofTickets</td>
-                <td>@EventVM.Active</td>
-                <td>@EventVM.Address</td>
-                <td>@EventVM.City</td>
-                <td><a asp-action="Details" asp-route-id="@EventVM.EventID">More!</a></td>
-                <td><a asp-action="Edit" asp-route-id="@EventVM.EventID">Change!</a></td>
-                <td><a asp-action="Delete" asp-route-id="@EventVM.EventID">Destroy!</a></td>
-            </tr>
+                @if (EventVM.Active == true)
+                {
+                    <tr>
+                        <td>@EventVM.HeadImageURL</td>
+                        <td>@EventVM.OrganiserID</td>
+                        <td>@EventVM.EventName</td>
+                        <td>@EventVM.StartDate</td>
+                        <td>@EventVM.EndDate</td>
+                        <td>@EventVM.NumberofTickets</td>
+                        <td>@EventVM.Active</td>
+                        <td>@EventVM.Address</td>
+                        <td>@EventVM.City</td>
+                        <td><a asp-controller="Event" asp-action="Details" asp-route-id="@EventVM.EventID">More!</a></td>
+
+                    </tr> 
+                }
+                else
+                {
+                    <tr style="background-color:lightgray;">
+                        <td>@EventVM.HeadImageURL</td>
+                        <td>@EventVM.OrganiserID</td>
+                        <td>@EventVM.EventName</td>
+                        <td>@EventVM.StartDate</td>
+                        <td>@EventVM.EndDate</td>
+                        <td>@EventVM.NumberofTickets</td>
+                        <td>@EventVM.Active</td>
+                        <td>@EventVM.Address</td>
+                        <td>@EventVM.City</td>
+                        <td><a asp-controller="Event" asp-action="Details" asp-route-id="@EventVM.EventID">More!</a></td>
+
+                    </tr>
+
+                }
+
             }
         </tbody>
     </table>

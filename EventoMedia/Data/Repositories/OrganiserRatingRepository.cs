@@ -14,6 +14,9 @@ namespace EventoMedia.Data.Repositories
         {
         }
 
-        
+        public OrganiserRating FindCurrentUserInTable(string id)
+        {
+           return _context.OrganiserRatings.Where(x => x.UserID == id).FirstOrDefault();
+        }
     }
 }

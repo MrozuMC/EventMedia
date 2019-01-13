@@ -14,6 +14,7 @@ namespace EventoMedia.Data.Interfaces
         IEnumerable<Event> FindWithTag(Func<Event, bool> predicate);
         IEnumerable<Event> FindWithMultiTags(Func<Event, bool> predicate);
         Event GetByIdWithEverything(int? id);
-        
+
+        bool CheckForActiveEvent(int? id);
     }
 }
