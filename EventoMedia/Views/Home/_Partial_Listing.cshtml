@@ -1,0 +1,17 @@
+﻿
+
+<tbody>
+    <tr>
+        <td>@Model.HeadImageURL</td>
+        <td>@Model.OrganiserID</td>
+        <td>@Model.EventName</td>
+        <td>@Model.StartDate</td>
+        <td>@Model.EndDate</td>
+        <td>@Model.NumberofTickets</td>
+        <td>@Model.Active</td>
+        <td>@Model.Address</td>
+        <td>@Model.City</td>
+        <td><a asp-controller="Event" asp-action="Details" asp-route-id="@Model.EventID">More!</a></td>
+
+    </tr>
+</tbody>

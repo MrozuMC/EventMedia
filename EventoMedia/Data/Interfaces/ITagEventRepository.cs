@@ -11,6 +11,7 @@ namespace EventoMedia.Data.Interfaces
         List<TagEvent> GetTagsToCRUD();
         List<TagEvent> GetTags(int? id);
 
+        List<TagEvent> GetTagsForEvent();
         
     }
 }

@@ -43,12 +43,18 @@ namespace EventoMedia.Controllers
 
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(string searchString)
         {
             var EventVM = new List<HomeViewModel>();
-
+            var GetTagsForEvent = _tagEventRepository.GetTagsForEvent();
             var Events = _eventRepository.GetAllWithAdress();
 
+            if(!String.IsNullOrEmpty(searchString)) {
+
+                Events = Events.Where(e => e.TagEvents.Any(t => t.Tag.TagName.Contains(searchString)));
+                  
+                
+            }
 
             if (Events.Count() == 0)
             {

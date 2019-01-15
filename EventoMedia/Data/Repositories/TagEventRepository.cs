@@ -19,6 +19,11 @@ namespace EventoMedia.Data.Repositories
             return _context.TagEvents.Include(x => x.Tag).Where(te => te.EventID == id).ToList();
         }
 
+        public List<TagEvent> GetTagsForEvent()
+        {
+            return _context.TagEvents.Include(x => x.Tag).Include(x => x.Event).ToList();
+        }
+
         public List<TagEvent> GetTagsToCRUD()
         {
             return _context.TagEvents.Include(x => x.Tag).ToList();

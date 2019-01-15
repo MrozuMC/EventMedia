@@ -54,8 +54,15 @@
 </div>
 <div>
     <div>
-    <a asp-action="Create" asp-route-id="">Create</a>
+        <a asp-action="Create" asp-route-id="">Create</a>
     </div>
+    @using (Html.BeginForm())
+    {
+        <p>
+            Search: @Html.TextBox("searchString")
+            <input type="submit" value="Search" />
+        </p>
+    }
     <table class="table table-striped table-hover">
 
         <thead>
@@ -72,47 +79,12 @@
                 <th>Details</th>
             </tr>
         </thead>
-        <tbody>
-            @foreach (var EventVM in Model)
-            {
-                @if (EventVM.Active == true)
-                {
-                    <tr>
-                        <td>@EventVM.HeadImageURL</td>
-                        <td>@EventVM.OrganiserID</td>
-                        <td>@EventVM.EventName</td>
-                        <td>@EventVM.StartDate</td>
-                        <td>@EventVM.EndDate</td>
-                        <td>@EventVM.NumberofTickets</td>
-                        <td>@EventVM.Active</td>
-                        <td>@EventVM.Address</td>
-                        <td>@EventVM.City</td>
-                        <td><a asp-controller="Event" asp-action="Details" asp-route-id="@EventVM.EventID">More!</a></td>
 
-                    </tr> 
-                }
-                else
-                {
-                    <tr style="background-color:lightgray;">
-                        <td>@EventVM.HeadImageURL</td>
-                        <td>@EventVM.OrganiserID</td>
-                        <td>@EventVM.EventName</td>
-                        <td>@EventVM.StartDate</td>
-                        <td>@EventVM.EndDate</td>
-                        <td>@EventVM.NumberofTickets</td>
-                        <td>@EventVM.Active</td>
-                        <td>@EventVM.Address</td>
-                        <td>@EventVM.City</td>
-                        <td><a asp-controller="Event" asp-action="Details" asp-route-id="@EventVM.EventID">More!</a></td>
-
-                    </tr>
-
-                }
-
+        @foreach (var EventVM in Model)
+        {
+            <partial name="_Partial_Listing" model="EventVM" />
             }
-        </tbody>
+
     </table>
 
-
-
-</div>
+  </div>

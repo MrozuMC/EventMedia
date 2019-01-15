@@ -54,7 +54,7 @@ namespace EventoMedia.Data.Repositories
 
         public IEnumerable<Event> GetAllWithAdress()
         {
-            return _context.Events.Include(a => a.EventAddress).Include(e => e.OrganiserRating).ThenInclude(x => x.User).OrderBy(e => e.StartDate);
+            return _context.Events.Include(a => a.EventAddress).Include(e => e.OrganiserRating).ThenInclude(x => x.User).OrderBy(e => e.StartDate).OrderByDescending(e => e.Active);
         }
 
         public Event GetByIdWithAddress(int? id) {
@@ -79,5 +79,6 @@ namespace EventoMedia.Data.Repositories
                 .AsNoTracking()                
                 .SingleOrDefault(m => m.EventID == id);
         }
+
     }
 }
