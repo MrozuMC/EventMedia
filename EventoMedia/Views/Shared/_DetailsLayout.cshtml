@@ -10,49 +10,45 @@
     <title>@ViewData["Title"]</title>
 
     <environment include="Development">
+
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/Style.css" />
+        <link rel="stylesheet" href="~/css/Details.css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Thasadith" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Exo+2" rel="stylesheet">
     </environment>
-    
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
 </head>
 <body>
-<nav>
-     <div class="NavSectionLeft">
-         <ul>
-             <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-             <li><a id="Create" asp-action="Create" asp-controller="Home">Add New Event</a></li>
-         </ul>
+    <nav>
+        <div class="NavSectionLeft">
+            <ul>
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a id="Create" asp-action="Create" asp-controller="Home">Add New Event</a></li>
+            </ul>
 
-     </div>
-     <div class="NavSectionRight">
-         <partial name="_LoginPartial" />
-     </div>
-</nav>
+        </div>
+        <div class="NavSectionRight">
+            <partial name="_LoginPartial" />
+        </div>
+    </nav>
     <header class="Header">
 
         <div class="CenterLogo"> EventoMedia </div>
     </header>
     <partial name="_CookieConsentPartial" />
-<div class="sectionentry">
-    <div class="EntryText">
-
-        <p> Want to meet with your friends but you can't organise Event? Do you want to organise biggest party ever but you have no friends?
-            Or maybe you want to commit group Sudoku? If so then you are in Luck
-        </p>
-        <br />
-        <p>EventoMedia is a best website on the internet to organise your own Event. Here you don't have to worry about political correctness, everybody is equally meaningless. </p>
+    <div class="sectionentry">
+        @RenderBody()
     </div>
-</div>
-<div class="Separator"></div>
-       <div class="paralaxa"> @RenderBody()</div>
-        
-        <footer>
-            <p>&copy; 2019 - EventoMedia - Marcin Mrozek</p>
-        </footer>
-    
+    <footer>
+        <p>&copy; 2019 - EventoMedia - Marcin Mrozek</p>
+    </footer>
+
 
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>

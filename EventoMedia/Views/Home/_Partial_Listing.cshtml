@@ -1,17 +1,22 @@
 ﻿
 
-<tbody>
-    <tr>
-        <td>@Model.HeadImageURL</td>
-        <td>@Model.OrganiserID</td>
-        <td>@Model.EventName</td>
-        <td>@Model.StartDate</td>
-        <td>@Model.EndDate</td>
-        <td>@Model.NumberofTickets</td>
-        <td>@Model.Active</td>
-        <td>@Model.Address</td>
-        <td>@Model.City</td>
-        <td><a asp-controller="Event" asp-action="Details" asp-route-id="@Model.EventID">More!</a></td>
+<div id="headimageURL"><a asp-controller="Event" asp-action="Details" asp-route-id="@Model.EventID"> @Model.HeadImageURL </a></div>
+<div id="EventGrid">
+    <div class="EventComponent1">@Model.EventName</div>
+    <div class="EventComponent2"><b>Start Date:  </b>@Model.StartDate</div>
+    <div class="EventComponent3"><b>End Date:  </b>@Model.EndDate</div>
+    <div class="EventComponent4"><b>Address:  </b>@Model.Address</div>
+    <div class="EventComponent5"><b>City:  </b>@Model.City</div>
+    <div class="EventComponent6"><b>Tickets Left:  </b>@Model.NumberofTickets</div>
+    <div class="EventComponent7"><b>Organiser Name:  </b>@Model.OrganiserID</div>
+</div>
+    
+ 
+   
 
-    </tr>
-</tbody>
+
+
+    
+        
+
+

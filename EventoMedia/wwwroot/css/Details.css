@@ -1,0 +1,197 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, "Helvetica Neue",Helvetica, sans-serif;
+    font-size: 17px;
+    line-height: 1.5;
+}
+
+.NavSectionLeft {
+    margin: 0;
+    padding: 7px 20px 7px 20px;
+    font-size: 20px;
+    float: left;
+    font-family: 'Oswald', sans-serif;
+}
+
+.Header {
+    color: #3b3272;
+    background-image: url(/images/marshmello-live-event-image-1920x1080.jpg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.NavSectionRight {
+    overflow: hidden;
+    float: right;
+    transition: max-height 0.5s;
+    -webkit-transition: max-height 0.5s;
+    -moz-transition: max-height 0.5s;
+    -o-transition: max-height 0.5s;
+}
+
+nav {
+    height: 60px;
+    background: transparent;
+    display: inline-block;
+    padding-bottom: 20px;
+    position: fixed;
+    width: 100%;
+    transition: all ease .4s;
+}
+
+.shrink {
+    height: 70px;
+    transition: all ease .4s;
+    background: #3b3272;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+nav li {
+    margin-top: 10px;
+    float: left;
+    display: inline-block;
+    padding: 4px 20px 7px 20px;
+    font-weight: bold;
+    color: #f4f4f4;
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+}
+
+    nav li a {
+        text-decoration-style: none;
+        color: #f4f4f4;
+    }
+
+        nav li a:hover {
+            text-decoration-style: none;
+            color: #ff960c;
+        }
+
+    nav li #Create {
+        padding: 5px;
+        border-radius: 6px;
+        border-style: solid;
+        border-color: #7c0000;
+    }
+
+        nav li #Create:hover {
+            background-color: #7c0000;
+        }
+
+nav button {
+    background-color: transparent;
+    border: none;
+}
+
+    nav button:hover {
+        background-color: transparent;
+        border: none;
+        color: #ff960c;
+    }
+
+.CenterLogo {
+    color: #ffffff;
+    border-radius: 20px;
+    background-color: rgba(59,50,114,0.6);
+    font-size: 60px;
+    font-family: 'Thasadith', sans-serif;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.sectionentry {
+    width: 100%;
+    background-color: #f4f4f4;
+    padding: 10px 7% 50px 7%;
+    font-family: 'Oswald', sans-serif;
+}
+
+#Eventnamerino {
+
+    
+    font-size: 42px;
+    width: 100%;
+    text-align: center;
+}
+
+#EventDescription {
+    
+    text-align:center;
+
+}
+#EventDescription h3{
+    color: #3b3272;
+}
+#timeStart{
+    font-size: 35px;
+    text-align:start;
+    float:left;
+}
+#timeEnd {
+    font-size: 35px;
+    text-align:end;
+}
+#Tickets{
+    font-size: 35px;
+    text-align:center;
+}
+#Addresserino{
+    font-size:30px;
+    text-align:center;
+    
+}
+.container{
+    width:100%;
+    display:flex;
+    flex-direction:row;
+}
+
+.Organiser {
+    
+    padding: 10px;
+    font-size: 25px;
+    width: 20%;
+    text-align: left;
+    border: solid #3b3272 1px;
+    border-radius: 10px;
+    
+    
+}
+.Users {
+    float:right;
+    padding: 10px;
+    font-size: 25px;
+    width: 20%;
+    
+    text-align: right;
+    border: solid #3b3272 1px;
+    border-radius: 10px;
+}
+.Tags{
+    display:flex;
+    flex-direction:row;
+    padding: 2px;
+}
+footer {
+    font-size: 25px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Exo 2', sans-serif;
+    color: #f4f4f4;
+    background-color: rgb(71, 71, 71);
+    min-height: 100px;
+}

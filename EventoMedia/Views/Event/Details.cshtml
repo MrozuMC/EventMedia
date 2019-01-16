@@ -3,138 +3,60 @@
     ViewData["Title"] = "Details";
 }
 @model HomeViewModel
+@Html.HiddenFor(model => model.EventID)
+<div class="Details">
+    <div id="Eventnamerino"><h1>@Html.DisplayFor(model => model.EventName)</h1></div>
+    <div id="EventDescription">
+        <h3>Event Description:</h3>
+        <p>@Html.DisplayFor(model => model.EventDescription)</p>
 
-<h2>Details</h2>
-
-<div>
-    <h4>Event</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        @Html.HiddenFor(model => model.EventID)
-        <dt>
-            @Html.DisplayNameFor(model => model.HeadImageURL)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HeadImageURL)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.OrganiserID)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.OrganiserID)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EventName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EventName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EventDescription)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EventDescription)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NumberofTickets)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NumberofTickets)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Active)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Active)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
-
-    </dl>
-    <div>
-        @for (int i = 0; i < Model.Tags.Capacity; i++)
-        {
-            <dl>
-                <dt>
-                    @Html.DisplayNameFor(x => Model.Tags[i].TagName)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(x => Model.Tags[i].TagName)
-                </dd>
-            </dl>
-        }
+    </div>
+    <div id="timeStart">
+        From: @Html.DisplayFor(model => model.StartDate)
+    </div>
+    <div id="timeEnd">To: @Html.DisplayFor(model => model.EndDate)</div>
+    <div id="Tickets">How many tickets?: @Html.DisplayFor(model => model.NumberofTickets) </div>
+    <div id="Addresserino">
+       <span style="color:#3b3272; ">Address:</span> @Html.DisplayFor(model => model.Address)
+       <span style="color:#3b3272; margin-left: 10px;">City:</span> @Html.DisplayFor(model => model.City)
+    </div>
+</div>
+<div class="container">
+    <div class="Organiser">
+        <span style="color:#3b3272; font-size: 40px;">Who's Organising?</span>
+        <div>Name: @Html.DisplayFor(model => model.Imie)</div>
+        <div>Surname: @Html.DisplayFor(model => model.Nazwisko)</div>
+        <div>Votes: @Html.DisplayFor(model => model.NumberOfVotes)</div>
+        <div>Rating: @Html.DisplayFor(model => model.Rating)</div>
+    </div>
+    <div class="Users">
+        <div style="color:#3b3272; font-size: 40px;">People who joined:</div>
+        <div>Name & Surname</div>
         @for (int i = 0; i < Model.Users.Capacity; i++)
         {
 
-            @Html.DisplayFor(x => Model.Users[i].Imie); @Html.DisplayFor(x => Model.Users[i].Nazwisko); <b>Nick:</b> @Html.DisplayFor(x => Model.Users[i].Nick);
-            <br />
+            <div>@Html.DisplayFor(x => Model.Users[i].Imie)  @Html.DisplayFor(x => Model.Users[i].Nazwisko) </div>
+
         }
+        <form id="Join" asp-action="Details" asp-route-id="@Model.EventID" method="post">
+            <input  type="submit" value="Join Event" />
+        </form>
     </div>
-    <div>
+</div>
+<div class="Tags">
+    <span>Tags:</span>
+    @for (int i = 0; i < Model.Tags.Capacity; i++)
+    {
         <dl>
-            <dt>
-                @Html.DisplayNameFor(model => model.Imie)
-            </dt>
+
             <dd>
-                @Html.DisplayFor(model => model.Imie)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Nazwisko)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Nazwisko)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.nick)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.nick)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.NumberOfVotes)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.NumberOfVotes)
-            </dd>
-            <dt>
-                @Html.DisplayNameFor(model => model.Rating)
-            </dt>
-            <dd>
-                @Html.DisplayFor(model => model.Rating)
+                <span>|@Html.DisplayFor(x => Model.Tags[i].TagName)|</span> 
             </dd>
         </dl>
-    </div>
+    }
 </div>
 
 
-<form asp-action="Details" asp-route-id="@Model.EventID" method="post">
-    <input type="submit" value="Join" />
-</form>
 <a asp-action="Edit" asp-controller="Home" asp-route-id="@Model.EventID">Edit Event</a>
 <a asp-action="Delete" asp-controller="Home" asp-route-id="@Model.EventID">Delete Event</a>
 <a asp-action="Index" asp-controller="Home">Back to List</a>
-
-
-
